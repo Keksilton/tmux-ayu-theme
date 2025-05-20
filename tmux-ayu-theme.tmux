@@ -34,7 +34,7 @@ setw() {
 
 get_battery() {
 	local battery = get "battery_icon"
-	if [ "$battery" == "?" ]
+	if [ "$battery" == "?" ]; then
 		echo ""
 	else
 		echo "  #{battery_icon} #{battery_percentage}"
