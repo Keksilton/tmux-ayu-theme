@@ -32,6 +32,15 @@ setw() {
    tmux set-window-option -gq "$option" "$value"
 }
 
+get_battery() {
+	local battery = get "battery_icon"
+	if [ -eq "$battery" "?" ]
+		echo ""
+	else
+		echo "  #{battery_icon} #{battery_percentage}"
+	fi
+}
+
 set "status" "on"
 set "status-justify" "left"
 
@@ -80,8 +89,9 @@ set "@prefix_highlight_output_prefix" "  "
 status_widgets=$(get "@ayu_widgets")
 time_format=$(get "@ayu_time_format" "%R %z")
 date_format=$(get "@ayu_date_format" "%Y-%m-%d")
+battery_info=$(get_battery)
 
-set "status-right" "#[fg=$ayu_white,bg=$ayu_black,nounderscore,noitalics]  ${time_format}    ${date_format}  #{battery_icon} #{battery_percentage} #[fg=$ayu_visual_grey,bg=$ayu_black]#[fg=$ayu_visual_grey,bg=$ayu_visual_grey]#[fg=$ayu_white, bg=$ayu_visual_grey]${status_widgets} #[fg=$ayu_green,bg=$ayu_visual_grey,nobold,nounderscore,noitalics]#[fg=$ayu_black,bg=$ayu_green,bold] #h "
+set "status-right" "#[fg=$ayu_white,bg=$ayu_black,nounderscore,noitalics]  ${time_format}    ${date_format} ${battery_info} #[fg=$ayu_visual_grey,bg=$ayu_black]#[fg=$ayu_visual_grey,bg=$ayu_visual_grey]#[fg=$ayu_white, bg=$ayu_visual_grey]${status_widgets} #[fg=$ayu_green,bg=$ayu_visual_grey,nobold,nounderscore,noitalics]#[fg=$ayu_black,bg=$ayu_green,bold] #h "
 set "status-left" "#[fg=$ayu_black,bg=$ayu_green,bold]   #S #{prefix_highlight}#[fg=$ayu_green,bg=$ayu_black,nobold,nounderscore,noitalics]"
 
 set "window-status-format" "#[fg=$ayu_black,bg=$ayu_black,nobold,nounderscore,noitalics]#[fg=$ayu_white,bg=$ayu_black] #I  #W #[fg=$ayu_black,bg=$ayu_black,nobold,nounderscore,noitalics]"
