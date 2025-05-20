@@ -33,8 +33,9 @@ setw() {
 }
 
 get_battery() {
-	local battery = get "battery_icon"
-	if [ "$battery" == "?" ]; then
+	local battery = $(get "battery_icon")
+	local unknown_battery = $(get "@batt_icon_status_unknown" "")
+	if [ "$battery" == "$unknown_battery" ]; then
 		echo ""
 	else
 		echo "  #{battery_icon} #{battery_percentage}"
